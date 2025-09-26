@@ -3,7 +3,7 @@
     "description": "Lightweight router for PHP applications",
     "type": "library",
     "license": "MIT",
-    "homepage": "https://github.com/codemonster-ru/router-php",
+    "homepage": "https://github.com/codemonster-ru/router",
     "authors": [
         {
             "name": "Kirill Kolesnikov",
@@ -40,7 +40,7 @@
         "lightweight"
     ],
     "support": {
-        "issues": "https://github.com/codemonster-ru/router-php/issues",
-        "source": "https://github.com/codemonster-ru/router-php"
+        "issues": "https://github.com/codemonster-ru/router/issues",
+        "source": "https://github.com/codemonster-ru/router"
     }
 }
