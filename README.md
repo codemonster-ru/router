@@ -3,7 +3,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/codemonster-ru/router.svg?style=flat-square)](https://packagist.org/packages/codemonster-ru/router)
 [![Total Downloads](https://img.shields.io/packagist/dt/codemonster-ru/router.svg?style=flat-square)](https://packagist.org/packages/codemonster-ru/router)
 [![License](https://img.shields.io/packagist/l/codemonster-ru/router.svg?style=flat-square)](https://packagist.org/packages/codemonster-ru/router)
-[![Tests](https://github.com/codemonster-ru/router-php/actions/workflows/tests.yml/badge.svg)](https://github.com/codemonster-ru/router-php/actions/workflows/tests.yml)
+[![Tests](https://github.com/codemonster-ru/router/actions/workflows/tests.yml/badge.svg)](https://github.com/codemonster-ru/router/actions/workflows/tests.yml)
 
 A lightweight router for PHP applications.
 
@@ -55,4 +55,4 @@ composer test
 
 ## 📜 License
 
-[MIT](https://github.com/codemonster-ru/router-php/blob/main/LICENSE)
+[MIT](https://github.com/codemonster-ru/router/blob/main/LICENSE)
