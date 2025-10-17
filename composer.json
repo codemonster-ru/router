@@ -42,5 +42,10 @@
     "support": {
         "issues": "https://github.com/codemonster-ru/router/issues",
         "source": "https://github.com/codemonster-ru/router"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "2.0.x-dev"
+        }
     }
 }
