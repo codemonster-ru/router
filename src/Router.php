@@ -4,6 +4,7 @@ namespace Codemonster\Router;
 
 class Router
 {
+    protected $controllerFactory = null;
     protected RouteCollection $routes;
 
     public function __construct()
@@ -14,18 +15,21 @@ class Router
     public function get(string $path, mixed $handler): self
     {
         $this->routes->add('GET', $path, $handler);
+
         return $this;
     }
 
     public function post(string $path, mixed $handler): self
     {
         $this->routes->add('POST', $path, $handler);
+
         return $this;
     }
 
     public function any(string $path, mixed $handler): self
     {
         $this->routes->add(['GET', 'POST'], $path, $handler);
+
         return $this;
     }
 
@@ -37,8 +41,18 @@ class Router
             return null;
         }
 
-        $dispatcher = new Dispatcher();
+        $dispatcher = new Dispatcher($this);
 
         return $dispatcher->dispatch($route);
+    }
+
+    public function setControllerFactory(callable $factory): void
+    {
+        $this->controllerFactory = $factory;
+    }
+
+    public function getControllerFactory(): ?callable
+    {
+        return $this->controllerFactory;
     }
 }
