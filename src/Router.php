@@ -6,31 +6,39 @@ class Router
 {
     protected $controllerFactory = null;
     protected RouteCollection $routes;
+    protected array $groupStack = [];
 
     public function __construct()
     {
         $this->routes = new RouteCollection();
     }
 
-    public function get(string $path, mixed $handler): self
+    public function get(string $path, mixed $handler): Route
     {
+        $route = new Route('GET', $path, $handler);
+
         $this->routes->add('GET', $path, $handler);
 
-        return $this;
+        return $route;
     }
 
-    public function post(string $path, mixed $handler): self
+    public function post(string $path, mixed $handler): Route
     {
+        $route = new Route('POST', $path, $handler);
+
         $this->routes->add('POST', $path, $handler);
 
-        return $this;
+        return $route;
     }
 
-    public function any(string $path, mixed $handler): self
+    public function any(string $path, mixed $handler): Route
     {
-        $this->routes->add(['GET', 'POST'], $path, $handler);
+        $methods = ['GET', 'POST'];
+        $route = new Route($methods, $path, $handler);
 
-        return $this;
+        $this->routes->add($methods, $path, $handler);
+
+        return $route;
     }
 
     public function dispatch(string $method, string $uri): mixed
@@ -63,5 +71,18 @@ class Router
     public function getControllerFactory(): ?callable
     {
         return $this->controllerFactory;
+    }
+
+    public function group(string $prefix, callable $callback): RouteGroup
+    {
+        $group = new RouteGroup($prefix, $callback, $this);
+
+        $this->groupStack[] = $group;
+
+        $group->run();
+
+        array_pop($this->groupStack);
+
+        return $group;
     }
 }

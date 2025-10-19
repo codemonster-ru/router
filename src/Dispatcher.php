@@ -13,6 +13,29 @@ class Dispatcher
 
     public function dispatch(Route $route, array $params = []): mixed
     {
+        $middlewareList = $route->getMiddleware();
+
+        $coreHandler = fn() => $this->callHandler($route, $params);
+
+        $pipeline = array_reduce(
+            array_reverse($middlewareList),
+            fn($next, $middleware) => function () use ($middleware, $next) {
+                $instance = new $middleware();
+
+                if (method_exists($instance, 'handle')) {
+                    return $instance->handle($next);
+                }
+
+                return $next();
+            },
+            $coreHandler
+        );
+
+        return $pipeline();
+    }
+
+    protected function callHandler(Route $route, array $params): mixed
+    {
         $handler = $route->handler;
 
         if (is_callable($handler)) {

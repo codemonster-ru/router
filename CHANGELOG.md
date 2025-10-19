@@ -4,6 +4,19 @@ All significant changes to this project will be documented in this file.
 
 # Changelog
 
+## [2.3.0] – 2025-10-20
+
+### Added
+
+-   **Middleware support** — Routes can now have their own middleware chains using the `Route::middleware()` method.
+-   **Route groups** — The `Router::group()` method has been added for organizing routes with a common prefix and middleware.
+-   Dispatcher now supports executing middleware as a sequential pipeline before calling the main handler.
+
+### Changed
+
+-   The `Router::get()`, `Router::post()`, and `Router::any()` methods now return `Route` instead of `Router`, allowing for chained calls (`->middleware()`).
+-   Improved typing and autocompletion for IDEs (Intelephense, PHPStan).
+
 ## [2.2.0] – 2025-10-19
 
 ### Added
