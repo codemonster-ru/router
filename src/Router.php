@@ -35,7 +35,16 @@ class Router
 
     public function dispatch(string $method, string $uri): mixed
     {
+        $uri = parse_url($uri, PHP_URL_PATH);
+        $uri = rtrim($uri, '/');
+        $uri = $uri === '' ? '/' : $uri;
+
         $route = $this->routes->match($method, $uri);
+
+        if (!$route && $uri !== '/') {
+            $alt = $uri . '/';
+            $route = $this->routes->match($method, $alt);
+        }
 
         if (!$route) {
             return null;

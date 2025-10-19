@@ -4,6 +4,20 @@ All significant changes to this project will be documented in this file.
 
 # Changelog
 
+## [2.2.0] – 2025-10-19
+
+### Added
+
+-   **Automatic route normalization** — Router now treats paths with and without a trailing `/` as the same.
+
+For example, the `/admin` and `/admin/` routes lead to the same handler.
+
+### Changed
+
+-   The `Router::dispatch()` method now normalizes the URI before searching for a route.
+
+This improves UX and eliminates frequent 404 errors due to an extra slash.
+
 ## [2.1.0] – 2025-10-19
 
 ### Added
