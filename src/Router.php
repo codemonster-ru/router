@@ -4,9 +4,7 @@ namespace Codemonster\Router;
 
 class Router
 {
-    protected $controllerFactory = null;
     protected RouteCollection $routes;
-    protected array $groupStack = [];
 
     public function __construct()
     {
@@ -17,7 +15,7 @@ class Router
     {
         $route = new Route('GET', $path, $handler);
 
-        $this->routes->add('GET', $path, $handler);
+        $this->routes->addRoute($route);
 
         return $route;
     }
@@ -26,7 +24,7 @@ class Router
     {
         $route = new Route('POST', $path, $handler);
 
-        $this->routes->add('POST', $path, $handler);
+        $this->routes->addRoute($route);
 
         return $route;
     }
@@ -36,12 +34,12 @@ class Router
         $methods = ['GET', 'POST'];
         $route = new Route($methods, $path, $handler);
 
-        $this->routes->add($methods, $path, $handler);
+        $this->routes->addRoute($route);
 
         return $route;
     }
 
-    public function dispatch(string $method, string $uri): mixed
+    public function dispatch(string $method, string $uri): ?Route
     {
         $uri = parse_url($uri, PHP_URL_PATH);
         $uri = rtrim($uri, '/');
@@ -54,34 +52,14 @@ class Router
             $route = $this->routes->match($method, $alt);
         }
 
-        if (!$route) {
-            return null;
-        }
-
-        $dispatcher = new Dispatcher($this);
-
-        return $dispatcher->dispatch($route);
+        return $route;
     }
 
-    public function setControllerFactory(callable $factory): void
+    public function group(string $prefix, callable $callback, array $parentMiddleware = []): RouteGroup
     {
-        $this->controllerFactory = $factory;
-    }
-
-    public function getControllerFactory(): ?callable
-    {
-        return $this->controllerFactory;
-    }
-
-    public function group(string $prefix, callable $callback): RouteGroup
-    {
-        $group = new RouteGroup($prefix, $callback, $this);
-
-        $this->groupStack[] = $group;
+        $group = new RouteGroup($prefix, $callback, $this, $parentMiddleware);
 
         $group->run();
-
-        array_pop($this->groupStack);
 
         return $group;
     }

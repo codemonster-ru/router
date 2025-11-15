@@ -4,6 +4,25 @@ All significant changes to this project will be documented in this file.
 
 # Changelog
 
+## [2.4.0] - 2025-11-16
+
+### Changed
+
+-   Router has been migrated to a "match-only" architecture: controller and middleware execution logic has been completely removed from the package.
+-   Route execution logic has been moved to Annabel Kernel (DI, middleware pipeline, controller invocation).
+-   Improved RouteGroup structure: correct middleware propagation and inheritance between nested groups has been added.
+-   Route group display has been simplified by removing the deprecated group stack.
+
+### Added
+
+-   Added the `RouteCollection::addRoute()` method for registering Route objects without duplication.
+-   Added support for inheriting middleware from parent groups within a RouteGroup.
+
+### Fixed
+
+-   Fixed a critical error that prevented middleware from being applied: Router created two different Route objects, and the middleware was assigned to the wrong instance.
+-   Fixed the behavior of nested route groups: middleware is now correctly inherited and combined. - Removed unused and misleading controller factory code.
+
 ## [2.3.0] – 2025-10-20
 
 ### Added

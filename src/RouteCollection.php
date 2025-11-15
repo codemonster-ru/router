@@ -7,9 +7,9 @@ class RouteCollection
     /** @var Route[] */
     protected array $routes = [];
 
-    public function add(string|array $methods, string $path, mixed $handler): void
+    public function addRoute(Route $route): void
     {
-        $this->routes[] = new Route((array) $methods, $path, $handler);
+        $this->routes[] = $route;
     }
 
     public function match(string $method, string $uri): ?Route
