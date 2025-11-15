@@ -16,11 +16,9 @@ class Route
         $this->handler = $handler;
     }
 
-    public function middleware(string|array $middleware): static
+    public function middleware(string|array ...$middleware): static
     {
-        foreach ((array)$middleware as $m) {
-            $this->middleware[] = $m;
-        }
+        $this->middleware[] = $middleware;
 
         return $this;
     }

@@ -4,6 +4,37 @@ All significant changes to this project will be documented in this file.
 
 # Changelog
 
+## [2.5.0] - 2025-11-16
+
+### Added
+
+-   Duplicate route detection in `RouteCollection::addRoute()`.  
+    Now adding two routes with the same path & HTTP method throws
+    a clear RuntimeException instead of silently overriding previous definitions.
+
+### Changed
+
+-   Reworked middleware definition mechanism in `Route`:
+    now `middleware()` accepts variadic arguments (`...$middleware`)
+    and stores middleware exactly as provided.
+-   Middleware inheritance in `RouteGroup` has been redesigned.
+    Group middleware no longer overrides route middleware and now
+    merges correctly in nested groups.
+
+### Fixed
+
+-   Fixed broken middleware arguments when using calls like:
+    `->middleware(AuthMiddleware::class, 'admin')`.
+-   Correct passing of middleware parameters to Kernel and custom middleware classes.
+-   Fixed inconsistent structure of `$route->getMiddleware()` between Route and RouteGroup.
+
+### Improvements
+
+-   Routing pipeline is now fully deterministic.
+-   Middleware chains execute in the correct order:
+    parent group → child group → route.
+-   Foundation for future advanced features (route prefixes, named routes).
+
 ## [2.4.0] - 2025-11-16
 
 ### Changed

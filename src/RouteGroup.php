@@ -18,11 +18,9 @@ class RouteGroup
         $this->parentMiddleware = $parentMiddleware;
     }
 
-    public function middleware(string|array $middleware): static
+    public function middleware(string|array ...$middleware): static
     {
-        foreach ((array)$middleware as $m) {
-            $this->middleware[] = $m;
-        }
+        $this->middleware[] = $middleware;
 
         return $this;
     }
@@ -40,7 +38,10 @@ class RouteGroup
     public function get(string $path, mixed $handler): Route
     {
         $route = $this->router->get($this->prefix . $path, $handler);
-        $route->middleware($this->fullMiddleware());
+
+        foreach ($this->fullMiddleware() as $mw) {
+            $route->middleware(...$mw);
+        }
 
         return $route;
     }
@@ -48,7 +49,10 @@ class RouteGroup
     public function post(string $path, mixed $handler): Route
     {
         $route = $this->router->post($this->prefix . $path, $handler);
-        $route->middleware($this->fullMiddleware());
+
+        foreach ($this->fullMiddleware() as $mw) {
+            $route->middleware(...$mw);
+        }
 
         return $route;
     }

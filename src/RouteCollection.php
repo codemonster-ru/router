@@ -9,6 +9,17 @@ class RouteCollection
 
     public function addRoute(Route $route): void
     {
+        foreach ($this->routes as $existing) {
+            if (
+                $existing->path === $route->path &&
+                array_intersect($existing->methods, $route->methods)
+            ) {
+                throw new \RuntimeException(
+                    "Duplicate route detected: [" . implode('|', $route->methods) . " {$route->path}]"
+                );
+            }
+        }
+
         $this->routes[] = $route;
     }
 
